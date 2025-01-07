@@ -1,0 +1,23 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-01-07T03:15:14Z",
+  "id": "informationdesign_1",
+  "duration": 36,
+  "title": "第1回：情報とは何か？情報をデザインする意義",
+  "authors": "i.sengoku",
+  "summary": "南成瀬中の3年3学期の授業資料",
+  "source": "https://docs.google.com/document/d/15msobmdrNpHyaNekNKzOHlaU0mn7eF4EhMhifVvwDhk",
+  "theme": "codelabs",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelabs"
+  ],
+  "tags": [],
+  "feedback": "https://github.com/k-tomoyasu/codelab-handson",
+  "url": "informationdesign_1"
+}
