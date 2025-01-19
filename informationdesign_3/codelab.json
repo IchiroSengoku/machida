@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-01-19T19:20:26Z",
+  "id": "informationdesign_3",
+  "duration": 27,
+  "title": "第3回：色とフォントのデザインについて",
+  "authors": "i.sengoku",
+  "summary": "南成瀬中の3年3学期の授業資料（3時間目）",
+  "source": "1S5CLR0cjEjpIafahdDQgduV89yPk_NY85_Hcv9ZEKH0",
+  "theme": "codelabs",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelabs"
+  ],
+  "tags": [],
+  "url": "informationdesign_3"
+}
