@@ -1,0 +1,183 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>第4回：アクセシビリティとユーザビリティ</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="informationdesign_4"
+                  title="第4回：アクセシビリティとユーザビリティ"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="はじめに" duration="3">
+        <h2 is-upgraded>この授業の目標</h2>
+<ul>
+<li>アクセシビリティとユーザビリティ</li>
+<li>色のアクセシビリティ</li>
+<li>フォントのアクセシビリティ</li>
+</ul>
+<h3 is-upgraded>この授業の課題提出用フォーム<br><a href="https://forms.gle/62K8bRpVoanxhyTs8" target="_blank">https://forms.gle/62K8bRpVoanxhyTs8</a></h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="前回の復習" duration="3">
+        <h2 is-upgraded>色を選ぶことは...</h2>
+<p>●印象を左右する</p>
+<p>色によって見る人の気分や印象が大きく変わります。たとえば、赤やオレンジなど暖色は元気・活発なイメージ、青は落ち着きや信頼感を与えるイメージといったように、人は色を見たときに無意識に感情やイメージを持ちます。Webサイトを通じて伝えたい雰囲気やメッセージに合わせて色を選ぶことで、より伝えたいイメージを強調できます。</p>
+<p>●読みやすさ・見やすさを保つ</p>
+<p>文字や背景の色が似すぎていたり、色同士がぶつかり合っていたりすると文字が読みにくくなります。見づらいWebサイトは使う人にとってストレスになるため、白や黒などの基本的な色と、補助的な明るい色をうまく組み合わせて読みやすさを保つことが大切です。</p>
+<p>●ブランドやテーマを表現する</p>
+<p>企業やサービスのイメージカラーがあれば、その色をWebサイトにも使うことで「この色はあの会社の色だ」と覚えてもらいやすくなります。また、学習サイトなら集中しやすい落ち着いた色、遊びやゲームのサイトなら楽しくなるようなポップな色など、テーマに合った色を使うことで、一貫性のあるデザインが生まれます。</p>
+<h2 is-upgraded>テキストを選ぶことは...</h2>
+<p>●読みやすさを左右する</p>
+<p>フォントによって文字の読みやすさが変わります。例えば、細くて飾りが多い文字はデザイン的におしゃれに見えますが、小さい画面で読みにくい場合があります。一方で太くシンプルな文字は、スマホなどの小さい画面でもはっきりと読みやすいです。Webサイトに来てくれた人にストレスなく文章を読んでもらうために、読みやすいフォント選びが大切です。</p>
+<p>●サイトのイメージや雰囲気を伝える</p>
+<p>フォントには、「やさしい」「かっこいい」「まじめ」といった雰囲気を作る力があります。たとえばポップで丸みのあるフォントは親しみやすいイメージを与えますし、スタイリッシュな細めのフォントは都会的でクールなイメージを作り出せます。Webサイトの内容や目的に合ったフォントを使うことで、見た人に伝えたいイメージを強調できます。</p>
+<p>●デザイン全体の統一感を保つ</p>
+<p>Webサイトには、タイトルの大きな文字、本文の文章、メニューのボタンなど、いろいろな文字が出てきます。あまりにも違う雰囲気のフォントをたくさん使いすぎると、ごちゃごちゃした印象を与えてしまうことも。フォントをある程度そろえたり、役割に応じて使い分けたりして統一感を持たせると、全体の見た目がキレイに整理されます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="アクセシビリティとユーザビリティ" duration="3">
+        <p>まずは、アクセシビリティとユーザビリティについて理解しよう</p>
+<p class="image-container"><img style="width: 601.70px" src="img/747107df9416c92e.png"></p>
+<h2 is-upgraded>誰にとっても見やすいWebサイトを作ることは重要</h2>
+<p>そこで色やフォントが果たす役割は大きい</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="色の見え方について" duration="3">
+        <p>日本人の男性の約5%（20人に1人）、女性の約0.2%（500人に1人）が生まれつきの<a href="https://www.gankaikai.or.jp/health/50/" target="_blank">色覚異常</a>を持っていると言われています。（異常と言っても色が見えないわけではない）</p>
+<p>例えば100人に「赤色」について聞いたとして、100人が全く同じ「赤色」を指すことはないと思います。Webページの制作者は、100人にそれぞれの「赤色」があることを踏まえた上でものづくりをしていかなければなりません。全ての人が問題なく使えるWebサイトを追求するために、色のアクセシビリティが重要なのです。</p>
+<h2 is-upgraded>WCAG（Webコンテンツアクセシビリティガイドライン）</h2>
+<p>WCAGとは「Web Content Accessibility Guidelines」の略称で、Web技術の標準化を推進する団体であるW3Cが提唱する、世界中で普及しているWebコンテンツのアクセシビリティガイドライン（ルール）です。このガイドラインに従うことで、誰にでも利用しやすいWebコンテンツになります。</p>
+<p>Webサイトを作る際はこういったルールがあることを知っておきましょう。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="色のアクセシビリティについて" duration="3">
+        <h3 is-upgraded>コントラストチェックツール</h3>
+<p><a href="https://webaim.org/resources/contrastchecker/" target="_blank">https://webaim.org/resources/contrastchecker/</a></p>
+<p>コントラストチェックツールを使ってコントラストのチェックをしてみよう</p>
+<p>文字（Foreground）と背景（Background）との色を決める<br>ここではパレットから選んでもカラーコードを入力してもどちらでもOK</p>
+<p>サンプルは文字が白（#FFFFFF）背景が蛍光緑（#8EE228）</p>
+<p class="image-container"><img style="width: 601.70px" src="img/7f9fcbf79f864b5c.png"></p>
+<p>ここでは<strong>Fail=失敗</strong>となっています。つまりこの色の組み合わせは<strong>見づらい</strong>ということ。</p>
+<p>WCAGのルールでは...</p>
+<p class="image-container"><img style="width: 601.70px" src="img/396fc50609b76c38.png"></p>
+<p>どういった色の組み合わせが見づらい/見やすいのか、以下のサイトを参考にいろいろと試してみよう。</p>
+<p>もう少し詳しく勉強したい人は<a href="https://www.lyzon.co.jp/blog/2024/0719_colorAndAccessibility/" target="_blank">このサイト</a>を見てみましょう。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="フォントのアクセシビリティについて" duration="3">
+        <p>前回はフォントの種類について学習しましたが、フォントの種類以外にも文字を読むときの、<strong>可読性・視認性・判読性</strong>に影響を与えるものを見ていきましょう。<img style="width: 601.70px" src="img/dd7cd50bf36e0606.png"></p>
+<h2 is-upgraded>行間・余白</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/cb3670efb9624925.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/528cee2d806de1e5.png"></p>
+<p>行間や余白については既にSTUDIO上で作業を行ったことがあるので、ここでは操作方法については触れませんが、余裕を持たせると同じ量の文章でも読みやすくなることを知っておきましょう。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Webサイトにおける視線の動き（Z型）" duration="3">
+        <p>人は自然に文章を目で追いかけます。新聞やマンガなど独特なパターンがありますが、Webサイトでもいくつかのパターンが存在します。</p>
+<h2 is-upgraded>ユーザーの行動を促すためのZ型</h2>
+<p>その名の通りアルファベットのZの形のように、ユーザーの視線が左上→右上→左下→右下の順に移動するパターンのことで、主に初見ユーザーがページ全体を把握する時や、横組みのテキストなどを読む時にみられる動きです。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/c0b08d0dfdda5369.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/24dd7092e9dd6345.png"></p>
+<p>このZ型では、ユーザーに最も強く伝えたい情報を一番最初に目に入る左上に配置し、視線が止まる一番最後の右下には、ユーザーに行なってほしい行動を促すためのアクションボタンなどを配置するのが効果的です。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Webサイトにおける視線の動き（F型）" duration="0">
+        <h2 is-upgraded>Webサイトに多いF型</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/745c74ffb36bdc2b.png"></p>
+<p>F型とは、アルファベットのFの形のように、ユーザーの視線が左上→右上→左下→右下→更に下の順に移動するパターンのことで、2回目以降に訪れたサイトで、詳細を把握する際に行われる視線の動きです。</p>
+<p>Z型に一見よく似ていますが、左の縦軸の内容でユーザーが大まかな情報を得てから、右の横軸の内容でさらに詳細を把握し、どんどん下に視線が流れていくのが特徴です。</p>
+<p>このF型を使う場合は、ユーザーに最も強く伝えたい情報を上部に配置したり、右側よりも左側に配置するのが効果的です。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/ff592b365f3f5d45.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Webサイトにおける視線の動き（N型）" duration="0">
+        <h2 is-upgraded>日本人に馴染みのあるN型</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/bbfd9bd18e47cff4.png"></p>
+<p>N型とは、アルファベットのNの形のように、ユーザーの視線が、右上→右下→左上→左下の順に移動するパターンのことです。<br>N型は主に雑誌や新聞などの縦書きのレイアウトに用いられ、日本人の習慣化した視線の動きです。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/926fa9cea59d0993.png"></p>
+<p>このN型は主に3カラム以上のページや、縦組の要素が並んでいるサイトなどに使われています。<br>また、和イメージした縦書きのレイアウトにする際などにもこのN型のパターンを使うことがあります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="STUDIOで作られた優秀作品を眺めてみよう" duration="3">
+        <p>STUDIOで作られたWebサイトで優れた作品の投票が行われています。</p>
+<p><a href="https://designaward2024.studio.design/" target="_blank">https://designaward2024.studio.design/</a></p>
+<p>いくつかのサイトを見ながら、Z型、F型、N型のどの型に沿って作られたのか、またどれにも当てはまらないのか...を見てみましょう。</p>
+<p>1/27までは投票もできるので、投票をしても良いです。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="学校のWebサイトを評価してみよう！" duration="0">
+        <h2 is-upgraded>南成瀬中学校のWebサイトを見てみましょう</h2>
+<p><a href="https://machida.schoolweb.ne.jp/1320099" target="_blank">https://machida.schoolweb.ne.jp/1320099</a></p>
+<p>これまで学習したことを活かして、より良い南成瀬中のWebサイトを提案します。</p>
+<h2 is-upgraded><strong>【活動1】ペルソナについて</strong></h2>
+<aside class="special"><p>南成瀬中のWebサイトは誰を対象に作りますか？</p>
+<p>ターゲットとなる人物を<strong>1名</strong>、なるべく詳しく設定しましょう。</p>
+</aside>
+<h2 is-upgraded><strong>【活動2】掲載する情報について</strong></h2>
+<aside class="special"><p>活動1で決定した、ペルソナはどういった情報が欲しくて南成瀬中のWebサイトを訪れるのでしょうか？ペルソナが求めているであろう情報を挙げてください。</p>
+</aside>
+<h2 is-upgraded><strong>【活動3】</strong></h2>
+<aside class="special"><p>活動2で挙げた情報について、調べてください。</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="次回予告" duration="3">
+        <ul>
+<li><h3 is-upgraded>今回調査したペルソナや情報を使って、新しい南成瀬中のWebサイトを提案します。STUDIOの基本的な使い方を再確認しておいてください。<br></h3>
+</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

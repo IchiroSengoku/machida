@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-01-22T15:06:10Z",
+  "id": "informationdesign_4",
+  "duration": 27,
+  "title": "第4回：アクセシビリティとユーザビリティ",
+  "authors": "i.sengoku",
+  "summary": "南成瀬中の3年3学期の授業資料（4時間目）",
+  "source": "1DjB7rt5P0UVM636XcQS11YkWAVUxYI9VLyswJy1kU-E",
+  "theme": "codelabs",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelabs"
+  ],
+  "tags": [],
+  "url": "informationdesign_4"
+}
