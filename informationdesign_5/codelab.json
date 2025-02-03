@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-02-03T15:08:03Z",
+  "id": "informationdesign_5",
+  "duration": 15,
+  "title": "第5回：学校サイトの作成",
+  "authors": "i.sengoku",
+  "summary": "南成瀬中の3年3学期の授業資料（5時間目）",
+  "source": "1_TqnsCFVZ3DuGMdt60aO_9JJaQwIaFicXy1aDlxLVKk",
+  "theme": "codelabs",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelabs"
+  ],
+  "tags": [],
+  "url": "informationdesign_5"
+}
