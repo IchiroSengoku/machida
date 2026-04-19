@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成AI個人情報クイズ</title>
+  <!-- Tailwind CSS (スタイリング用) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome (アイコン用) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* 3Dフリップアニメーション用のカスタムCSS */
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { 
+      backface-visibility: hidden; 
+      -webkit-backface-visibility: hidden; 
+    }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    
+    /* スクロールバーのカスタマイズ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-indigo-100 font-sans text-slate-800 m-0 p-0 min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-2xl p-4 sm:p-6">
+    
+    <!-- ==================== スタート画面 ==================== -->
+    <div id="start-screen" class="bg-white rounded-3xl shadow-xl overflow-hidden p-8 text-center mx-auto max-w-xl transition-all">
+      <div class="mx-auto bg-indigo-100 w-24 h-24 rounded-full flex items-center justify-center mb-6">
+        <i class="fa-solid fa-shield-halved text-5xl text-indigo-600"></i>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-4 tracking-tight">
+        生成AI個人情報クイズ！
+      </h1>
+      <p class="text-lg text-slate-600 mb-8 font-medium">
+        これって入力してもいいの？<br />
+        AIに入力していい情報（〇）と、<br class="md:hidden" />ダメな情報（×）を見分けよう！
+      </p>
+      <button 
+        onclick="startGame()"
+        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 text-xl"
+      >
+        クイズをスタート！
+      </button>
+    </div>
+
+    <!-- ==================== プレイ画面（フラッシュカード） ==================== -->
+    <div id="playing-screen" class="hidden flex flex-col items-center w-full">
+      
+      <!-- 進捗バー -->
+      <div class="w-full flex justify-between items-center mb-6 px-2">
+        <span id="progress-text" class="font-bold text-indigo-800 bg-white px-4 py-1.5 rounded-full shadow-sm">
+          第 1 問 / 10
+        </span>
+        <span id="score-text" class="font-bold text-indigo-600">
+          正解数: 0
+        </span>
+      </div>
+
+      <!-- カード本体 -->
+      <div class="w-full relative perspective-1000 h-[480px] sm:h-[420px]">
+        <div id="flashcard" class="w-full h-full relative transition-transform duration-500 transform-style-3d shadow-xl rounded-3xl">
+          
+          <!-- 表面（問題） -->
+          <div class="absolute inset-0 backface-hidden bg-white rounded-3xl border-4 border-transparent p-6 flex flex-col">
+            <div class="flex-grow flex flex-col justify-center mb-6 overflow-y-auto">
+              <span class="text-indigo-500 font-bold mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-circle-exclamation text-lg"></i>
+                以下の入力はOK？NG？
+              </span>
+              <h2 id="question-text" class="text-lg md:text-xl lg:text-2xl font-bold leading-relaxed text-slate-800">
+                <!-- 問題文がここに入ります -->
+              </h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-auto">
+              <button 
+                onclick="handleAnswer(true)"
+                class="bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 text-blue-700 rounded-2xl py-5 sm:py-6 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
+              >
+                <i class="fa-solid fa-circle-check text-4xl sm:text-5xl text-blue-500"></i>
+                <span class="text-xl sm:text-2xl font-bold">〇 (OK)</span>
+              </button>
+              <button 
+                onclick="handleAnswer(false)"
+                class="bg-red-50 hover:bg-red-100 border-2 border-red-200 text-red-700 rounded-2xl py-5 sm:py-6 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
+              >
+                <i class="fa-solid fa-circle-xmark text-4xl sm:text-5xl text-red-500"></i>
+                <span class="text-xl sm:text-2xl font-bold">× (NG)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 裏面（解説） -->
+          <div id="flashcard-back" class="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl border-4 p-6 flex flex-col">
+            <div class="text-center mb-4">
+              <div id="result-badge">
+                <!-- 正解/不正解バッジ -->
+              </div>
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 mt-2">
+                正解は <span id="correct-answer-text" class="text-indigo-600"></span> です
+              </h3>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 sm:p-5 mb-6 flex-grow overflow-y-auto">
+              <h4 class="font-bold text-indigo-800 mb-2 border-b-2 border-indigo-100 pb-2">解説</h4>
+              <p id="explanation-text" class="text-slate-700 leading-relaxed sm:text-lg">
+                <!-- 解説文がここに入ります -->
+              </p>
+            </div>
+            
+            <button 
+              onclick="nextQuestion()"
+              id="next-btn"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 sm:py-4 px-8 rounded-2xl shadow-md transition-all active:scale-95 text-lg sm:text-xl flex items-center justify-center gap-2 mt-auto"
+            >
+              次の問題へ <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 結果画面 ==================== -->
+    <div id="result-screen" class="hidden bg-white rounded-3xl shadow-xl overflow-hidden p-6 md:p-10 w-full transition-all">
+      <div class="text-center mb-8 border-b-2 border-slate-100 pb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">クイズ完了！</h2>
+        <div id="final-score" class="text-4xl sm:text-5xl font-extrabold text-indigo-600 mb-3">
+          <!-- スコアがここに入ります -->
+        </div>
+        <p id="result-message" class="text-base sm:text-lg text-slate-600 font-medium">
+          <!-- メッセージがここに入ります -->
+        </p>
+      </div>
+
+      <div class="bg-indigo-50 rounded-2xl p-5 sm:p-6 mb-8">
+        <h3 class="text-lg sm:text-xl font-bold text-indigo-900 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-indigo-600"></i>
+          【まとめ】AIを使うときの3つの約束
+        </h3>
+        <ul class="space-y-4">
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base">1</span>
+            <p class="text-indigo-900 font-medium text-sm sm:text-base pt-1">
+              自分や人の<strong>「個人情報（名前、住所、電話番号、生年月日、顔写真など）」</strong>は絶対に入れない！
+            </p>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base">2</span>
+            <p class="text-indigo-900 font-medium text-sm sm:text-base pt-1">
+              パスワードやお金に関する<strong>「秘密の情報」</strong>は絶対に入れない！
+            </p>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base">3</span>
+            <p class="text-indigo-900 font-medium text-sm sm:text-base pt-1">
+              迷ったときは、入力する前に<strong>先生や家の人に相談する！</strong>
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <button 
+        onclick="startGame()"
+        class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transition-all active:scale-95 text-lg sm:text-xl flex items-center justify-center gap-2"
+      >
+        <i class="fa-solid fa-rotate-left"></i> もう一度プレイする
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ==================== JavaScript処理 ==================== -->
+  <script>
+    const quizData = [
+      {
+        id: 1,
+        question: "AIに自己紹介しようと思って、「こんにちは！私は〇〇中学校2年の山田太郎です！」と入力した。",
+        isOk: false,
+        explanation: "フルネームや学校名は「個人情報」です。これらを組み合わせると、あなたが誰で、どこにいるのかが完全に特定されてしまいます。AIに入力したデータは、AIの学習に使われたり、どこかへ流出したりする危険がゼロではないため、絶対にやめましょう。"
+      },
+      {
+        id: 2,
+        question: "宿題の参考にしたいので、「徳川家康がやったことを中学生向けにわかりやすく教えて」と入力した。",
+        isOk: true,
+        explanation: "歴史の事実や一般的な知識についての質問は、個人情報が含まれていないため全く問題ありません。勉強のサポートとしてAIを上手に使えている良い例です。"
+      },
+      {
+        id: 3,
+        question: "スマホのパスワードを忘れそうなので、AIに「私のパスワードは『1234』だから覚えておいてね」と入力した。",
+        isOk: false,
+        explanation: "パスワードや暗証番号は、あなたを守るための「鍵」です。これをAIやネット上に入力するのは、家の鍵を道端に置いておくのと同じくらい危険です。"
+      },
+      {
+        id: 4,
+        question: "今日の晩ごはんに何を作るか迷ったので、「冷蔵庫にある豚肉とキャベツで作れるレシピを教えて」と入力した。",
+        isOk: true,
+        explanation: "食材の名前や一般的なレシピの質問には、個人情報や秘密の情報は含まれていません。AIの得意分野なので、おいしいレシピをたくさん教えてくれます。"
+      },
+      {
+        id: 5,
+        question: "友達と遊びに行ったときの写真をAIに送って、「この写真をもとに、アニメ風のイラストを描いて！」とお願いした。",
+        isOk: false,
+        explanation: "顔写真は重要な個人情報です。特に、自分だけでなく「友達の顔」を勝手にAIに送信するのは、友達のプライバシーや肖像権を傷つけることになります。顔が写っている写真のアップロードは控えましょう。"
+      },
+      {
+        id: 6,
+        question: "AIに「私、〇〇県〇〇市〇〇町1-2-3のマンションに住んでるんだけど、近くのおすすめの公園を教えて」と詳しい住所を入力した。",
+        isOk: false,
+        explanation: "詳しい住所（番地やマンション名など）は絶対にNGです。もし周辺の情報を調べたいときは、「東京都の〇〇駅の近くの公園を教えて」のように、広い範囲（自分が特定されない範囲）で質問するようにしましょう。"
+      },
+      {
+        id: 8,
+        question: "親に頼まれた買い物のやり方がわからず、「お母さんのクレジットカード番号は〇〇〇〇です。これを使ってAIさん代わりに買ってくれる？」と入力した。",
+        isOk: false,
+        explanation: "クレジットカード番号や銀行の口座番号などの「お金に関する情報」は、絶対にAIに入力してはいけません。悪用されると、多額のお金を盗まれるなど、取り返しのつかない事件に巻き込まれる可能性があります。"
+      },
+      {
+        id: 9,
+        question: "文化祭のクラスTシャツのデザインアイデアが欲しいので、「中学生の文化祭に合う、おもしろいTシャツのキャッチコピーを考えて」と入力した。",
+        isOk: true,
+        explanation: "クラスTシャツのキャッチコピーなど、クリエイティブなアイデア出しは問題ありません。ただし、AIが作ったものをそのまま「自分が作りました」と言うのはルール違反になることもあるので、あくまで「参考」として使いましょう。"
+      },
+      {
+        id: 10,
+        question: "AIと仲良くなりたいと思い、「私の電話番号は090-XXXX-XXXXだよ。いつでも電話してね！」と入力した。",
+        isOk: false,
+        explanation: "電話番号も大切な個人情報です。また、現在のAIはあなたに直接電話をかけることはできません。電話番号、メールアドレス、LINEのIDなどの連絡先は絶対に入力しないでください。"
+      },
+      {
+        id: 11, // 新規追加（生年月日）
+        question: "AIの占いアプリで遊ぶため、「私の誕生日は2010年5月15日です。今日の運勢を占って！」と入力した。",
+        isOk: false,
+        explanation: "生年月日は重要な個人情報の一つです。名前や住んでいる地域など他の情報と組み合わさることで、個人が特定される危険性が高まります。また、パスワードを忘れたときの「秘密の質問」など本人確認に使われることも多いため、むやみに入力してはいけません。"
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let isFlipped = false;
+    let currentQuizList = []; // シャッフルしたクイズデータを保持する配列
+
+    // 配列をシャッフルする関数
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // 画面の切り替え
+    function showScreen(screenId) {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('playing-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById(screenId).classList.remove('hidden');
+    }
+
+    // ゲーム開始
+    function startGame() {
+      currentIndex = 0;
+      score = 0;
+      currentQuizList = shuffleArray([...quizData]); // クイズを毎回シャッフル
+      updatePlayingScreen();
+      showScreen('playing-screen');
+    }
+
+    // プレイ画面（カード）の更新
+    function updatePlayingScreen() {
+      isFlipped = false;
+      const q = currentQuizList[currentIndex];
+      
+      // テキストの更新
+      document.getElementById('progress-text').innerText = `第 ${currentIndex + 1} 問 / ${currentQuizList.length}`;
+      document.getElementById('score-text').innerText = `正解数: ${score}`;
+      
+      const questionElement = document.getElementById('question-text');
+      questionElement.innerText = `「${q.question}」`;
+      
+      // クレジットカードの文章（元の問8）が長いため、この問題だけフォントを一段階小さくする
+      if (q.id === 8) {
+        questionElement.className = "text-base md:text-lg lg:text-xl font-bold leading-relaxed text-slate-800";
+      } else {
+        questionElement.className = "text-lg md:text-xl lg:text-2xl font-bold leading-relaxed text-slate-800";
+      }
+      
+      // カードの状態をリセット（表面に戻す、枠線を消す）
+      document.getElementById('flashcard').classList.remove('rotate-y-180');
+      document.getElementById('flashcard-back').classList.remove('border-green-400', 'border-red-400');
+      document.getElementById('flashcard-back').classList.add('border-transparent');
+    }
+
+    // 回答ボタンを押した時の処理
+    function handleAnswer(answer) {
+      if (isFlipped) return; // すでに裏返っている場合は無視
+      isFlipped = true;
+      
+      const q = currentQuizList[currentIndex];
+      const isCorrect = (answer === q.isOk);
+      
+      if (isCorrect) {
+        score++;
+        document.getElementById('score-text').innerText = `正解数: ${score}`;
+      }
+      
+      // 裏面（解説）の表示設定
+      const resultBadge = document.getElementById('result-badge');
+      const cardBack = document.getElementById('flashcard-back');
+      
+      cardBack.classList.remove('border-transparent');
+      if (isCorrect) {
+        resultBadge.className = "inline-flex items-center gap-2 text-green-600 bg-green-50 px-6 py-2 rounded-full font-bold text-xl sm:text-2xl mb-2";
+        resultBadge.innerHTML = `<i class="fa-solid fa-circle-check text-2xl sm:text-3xl"></i> 正解！`;
+        cardBack.classList.add('border-green-400');
+      } else {
+        resultBadge.className = "inline-flex items-center gap-2 text-red-600 bg-red-50 px-6 py-2 rounded-full font-bold text-xl sm:text-2xl mb-2";
+        resultBadge.innerHTML = `<i class="fa-solid fa-circle-xmark text-2xl sm:text-3xl"></i> ざんねん！`;
+        cardBack.classList.add('border-red-400');
+      }
+      
+      document.getElementById('correct-answer-text').innerText = q.isOk ? "「〇 (OK)」" : "「× (NG)」";
+      document.getElementById('explanation-text').innerText = q.explanation;
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentIndex < currentQuizList.length - 1) {
+        nextBtn.innerHTML = `次の問題へ <i class="fa-solid fa-arrow-right"></i>`;
+      } else {
+        nextBtn.innerHTML = `結果を見る <i class="fa-solid fa-arrow-right"></i>`;
+      }
+      
+      // カードを回転させる（CSSアニメーション）
+      document.getElementById('flashcard').classList.add('rotate-y-180');
+    }
+
+    // 次の問題へ進む
+    function nextQuestion() {
+      if (currentIndex < currentQuizList.length - 1) {
+        currentIndex++;
+        
+        // アニメーションを一時的に無効にして、即座に表面へ切り替える
+        const flashcard = document.getElementById('flashcard');
+        flashcard.classList.remove('transition-transform', 'duration-500');
+        
+        updatePlayingScreen();
+        
+        // 少し待ってからアニメーションの設定を戻す（回答時の回転用）
+        setTimeout(() => {
+          flashcard.classList.add('transition-transform', 'duration-500');
+        }, 50);
+      } else {
+        showResultScreen();
+      }
+    }
+
+    // 結果画面の表示
+    function showResultScreen() {
+      document.getElementById('final-score').innerHTML = `${score} <span class="text-2xl text-slate-500">/ ${currentQuizList.length} 問正解</span>`;
+      
+      let msg = "";
+      if (score === currentQuizList.length) {
+        msg = "パーフェクト！AIの安全な使い方はバッチリだね！";
+      } else if (score >= currentQuizList.length * 0.7) {
+        msg = "すばらしい！あともう少しで完璧だね！";
+      } else {
+        msg = "もう一度チャレンジして、安全な使い方をマスターしよう！";
+      }
+      
+      document.getElementById('result-message').innerText = msg;
+      showScreen('result-screen');
+    }
+  </script>
+</body>
+</html>
